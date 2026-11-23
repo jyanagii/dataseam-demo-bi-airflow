@@ -1,0 +1,17 @@
+[
+  {
+    "id": 11,
+    "name": "Daily Revenue Trend",
+    "description": "Daily revenue from mart.daily_sales.",
+    "database_id": 2,
+    "display": "line",
+    "type": "question",
+    "dataset_query": {
+      "database": 2,
+      "type": "native",
+      "native": {
+        "query": "SELECT order_date, SUM(total_amount) AS revenue\nFROM mart.daily_sales\nGROUP BY order_date\nORDER BY order_date"
+      }
+    }
+  }
+]

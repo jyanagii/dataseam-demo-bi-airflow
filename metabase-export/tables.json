@@ -1,0 +1,14 @@
+[
+  {
+    "id": 101,
+    "db_id": 2,
+    "schema": "mart",
+    "name": "daily_sales"
+  },
+  {
+    "id": 102,
+    "db_id": 2,
+    "schema": "core",
+    "name": "orders"
+  }
+]

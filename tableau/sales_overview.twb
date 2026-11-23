@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<workbook source-build='2024.2.0' version='18.1'>
+  <datasources>
+    <datasource caption='Daily Sales' inline='true' name='federated.daily_sales' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='acme-analytics-prod' name='bigquery.1'>
+            <connection catalog='acme-analytics-prod' class='bigquery' project='acme-analytics-prod' schema='mart' />
+          </named-connection>
+        </named-connections>
+        <relation connection='bigquery.1' name='daily_sales' table='[mart].[daily_sales]' type='table' />
+      </connection>
+      <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
+      <column caption='Total Amount' datatype='real' name='[total_amount]' role='measure' type='quantitative' />
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Daily Revenue'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Daily Sales' name='federated.daily_sales' />
+          </datasources>
+          <datasource-dependencies datasource='federated.daily_sales'>
+            <column datatype='date' name='[order_date]' role='dimension' />
+            <column datatype='real' name='[total_amount]' role='measure' />
+          </datasource-dependencies>
+        </view>
+        <rows>[federated.daily_sales].[sum:total_amount:qk]</rows>
+        <cols>[federated.daily_sales].[order_date]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name='Executive Sales Overview'>
+      <zones>
+        <zone name='Daily Revenue' type-v2='layout-basic' />
+      </zones>
+    </dashboard>
+  </dashboards>
+</workbook>
